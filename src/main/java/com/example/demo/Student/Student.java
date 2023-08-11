@@ -1,7 +1,10 @@
 package com.example.demo.Student;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
+
 @Entity
 @Table
 public class Student {
@@ -20,6 +23,7 @@ public class Student {
     private String name;
     private String email;
     private LocalDate DOB;
+    @Transient
     private int age;
 
 //Constructors
@@ -30,24 +34,20 @@ public class Student {
             Long id,
             String name,
             String email,
-            LocalDate DOB,
-            int age) {
+            LocalDate DOB) {
         Id = id;
         this.name = name;
         this.email = email;
         this.DOB = DOB;
-        this.age = age;
     }
 
     public Student(
             String name,
             String email,
-            LocalDate DOB,
-            int age) {
+            LocalDate DOB) {
         this.name = name;
         this.email = email;
         this.DOB = DOB;
-        this.age = age;
     }
 //GETTERS abd SETTERS
     public Long getId() {
@@ -83,7 +83,7 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(this.DOB, LocalDate.now()).getYears();
     }
 
     public void setAge(int age) {
